@@ -257,7 +257,7 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 ##########################################################################
 # Get data and prepare plots
 # TITLE AND IMAGES
-st.sidebar.image('https://www.python.org/static/community_logos/python-powered-h-100x130.png')
+st.sidebar.image('https://www.python.org/static/community_logos/python-powered-h-100x130.png', width=50)
 st.title("Sample hour checking application for employees")
 st.caption('Written & designed by Luis Perez Morales')
 
@@ -282,10 +282,7 @@ df['END'] = ['2022-09-17 17:05:14',
 df['END'] = pd.to_datetime(df['END'])
 df['DURATION'] = df['END'] - df['START']
 df['DATE'] = [df['START'][i].date() for i in df.index]
-
 filtered_df = filter_dataframe(df)
-daily_hrs = get_daily_hr_totals(filtered_df)
-weekly_hrs = get_weekly_hr_totals(filtered_df)
 
 ###########################################################################
 # SHOW INTERACTIVE TABLE AND OPTIONS
