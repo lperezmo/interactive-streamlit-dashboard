@@ -146,7 +146,7 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     modification_container = st.sidebar.container()
     str_name = str()
     with modification_container:
-        to_filter_columns = st.multiselect("Filter dataframe on", df.columns, default=['Date'])
+        to_filter_columns = st.multiselect("Filter dataframe on", df.columns, default=['DATE'])
         for column in to_filter_columns:
             left, right = st.columns((1, 20))
             custom_columns = ['First Name', 'Last Name', 'Supervisor']
@@ -257,7 +257,7 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 ##########################################################################
 # Get data and prepare plots
 # TITLE AND IMAGES
-st.sidebar.image('https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/community/logos/python-logo-only.png')
+st.sidebar.image('https://www.python.org/static/community_logos/python-powered-h-100x130.png')
 st.title("Sample hour checking application for employees")
 st.caption('Written & designed by Luis Perez Morales')
 
