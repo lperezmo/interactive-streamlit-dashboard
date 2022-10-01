@@ -3,3 +3,4 @@ pyodbc
 streamlit
 streamlit-aggrid
 datetime
+plotly
