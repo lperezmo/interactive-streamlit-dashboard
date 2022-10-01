@@ -1,0 +1,5 @@
+pandas
+pyodbc
+streamlit
+streamlit-aggrid
+datetime
