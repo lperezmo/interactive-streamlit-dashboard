@@ -284,7 +284,7 @@ df['DURATION'] = df['END'] - df['START']
 df['DATE'] = [df['START'][i].date() for i in df.index]
 #filtered_df = filter_dataframe(df)
 
-filtered_df = df.copy()
+filtered_df = df.loc[["START","END","DATE"]].copy()
 ###########################################################################
 # SHOW INTERACTIVE TABLE AND OPTIONS
 st.subheader("See your hours below:")
