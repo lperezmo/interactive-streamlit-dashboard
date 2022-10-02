@@ -146,7 +146,7 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     modification_container = st.sidebar.container()
     str_name = str()
     with modification_container:
-        to_filter_columns = st.multiselect("Filter dataframe on", df.columns, default=['DATE'])
+        to_filter_columns = st.multiselect("Filter dataframe on", df.columns, default='DATE')
         for column in to_filter_columns:
             left, right = st.columns((1, 20))
             custom_columns = ['First Name', 'Last Name', 'Supervisor']
