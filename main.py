@@ -232,10 +232,10 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
                 user_date_input = right.date_input(
                     f"Values for {column}",
                     value=(
-                        # df[column].min(),
-                        # df[column].max(),
-                        _start,
-                        _end
+                        df[column].min(),
+                        df[column].max(),
+                        #_start,
+                        #_end
                     ),
                 )
                 if len(user_date_input) == 2:
@@ -287,14 +287,7 @@ filtered_df = filter_dataframe(df)
 ###########################################################################
 # SHOW INTERACTIVE TABLE AND OPTIONS
 st.subheader("See your hours below:")
-gd = GridOptionsBuilder.from_dataframe(filtered_df)
-gridoptions = gd.build()
-grid_table = AgGrid(filtered_df,
-                    height=200,
-                    gridOptions=gridoptions,
-                    update_mode=GridUpdateMode.SELECTION_CHANGED,
-                    # theme="material"
-                    )
+st.dataframe(filtered_df)
 
 # Save as CSV for own records
 csv = convert_df(filtered_df)
