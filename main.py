@@ -132,7 +132,7 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 
     #         if is_datetime64_any_dtype(df[col]):
     #             df[col] = df[col].dt.tz_localize(None)
-        if col == 'Date':
+        if col == 'DATE':
             if is_object_dtype(df[col]):
                 try:
                     df[col] = pd.to_datetime(df[col])
@@ -153,7 +153,7 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
             ###############################################
             # Custom selectors: (to force drop down menus and whatnot)
             if column == custom_columns[2]:
-                if is_categorical_dtype(df[column]) or df[column].nunique() < 10:
+                if is_categorical_dtype(df[column]) or df[column].nunique() < 2:
                     user_cat_input = right.multiselect(
                         f"Choose supervisor:",
                         df[column].unique(),
@@ -171,7 +171,7 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
                     df = df[df[column].isin(user_cat_input)]
                     str_name = str_name+str(column)+str(user_cat_input) 
             if column == custom_columns[1]:
-                if is_categorical_dtype(df[column]) or df[column].nunique() < 10:
+                if is_categorical_dtype(df[column]) or df[column].nunique() < 2:
                     user_cat_input = right.multiselect(
                         f"Choose last name:",
                         df[column].unique(),
@@ -188,7 +188,7 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
                     df = df[df[column].isin(user_cat_input)]
                     str_name = str_name+str(column)+str(user_cat_input)       
             if column == custom_columns[0]:
-                if is_categorical_dtype(df[column]) or df[column].nunique() < 10:
+                if is_categorical_dtype(df[column]) or df[column].nunique() < 2:
                     user_cat_input = right.multiselect(
                         f"Choose first name:",
                         df[column].unique(),
@@ -204,8 +204,8 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
                     df = df[df[column].isin(user_cat_input)]
                     str_name = str_name+str(column)+str(user_cat_input)       
             ################################################
-            # Treat columns with < 10 unique values as categorical
-            if is_categorical_dtype(df[column]) or df[column].nunique() < 10 and column not in custom_columns:
+            # Treat columns with < 2 unique values as categorical
+            if is_categorical_dtype(df[column]) or df[column].nunique() < 2 and column not in custom_columns:
                 user_cat_input = right.multiselect(
                     f"Values for {column}",
                     df[column].unique(),
@@ -257,7 +257,7 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 ##########################################################################
 # Get data and prepare plots
 # TITLE AND IMAGES
-st.sidebar.image('https://www.python.org/static/community_logos/python-powered-h-100x130.png', width=50)
+st.sidebar.image('https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/files/python-logo-only.svg', width=150)
 st.title("Sample hour checking application for employees")
 st.caption('Written & designed by Luis Perez Morales')
 
