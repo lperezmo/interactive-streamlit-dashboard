@@ -272,14 +272,14 @@ df['START'] = ['2022-09-17 06:49:50',
               '2022-09-21 06:33:17',
               '2022-09-22 06:44:17',
               '2022-09-23 06:40:17']
-df['START'] = pd.to_datetime(df['START'])
+#df['START'] = pd.to_datetime(df['START'])
 df['END'] = ['2022-09-17 17:05:14', 
             '2022-09-19 17:05:14', 
              '2022-09-20 16:53:17',
              '2022-09-21 16:59:11',
              '2022-09-22 17:33:10',
              '2022-09-23 16:32:38']
-df['END'] = pd.to_datetime(df['END'])
+#df['END'] = pd.to_datetime(df['END'])
 df['DURATION'] = df['END'] - df['START']
 df['DATE'] = [df['START'][i].date() for i in df.index]
 filtered_df = filter_dataframe(df)
