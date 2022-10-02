@@ -287,7 +287,7 @@ filtered_df = filter_dataframe(df)
 ###########################################################################
 # SHOW INTERACTIVE TABLE AND OPTIONS
 st.subheader("See your hours below:")
-gd = GridOptionsBuilder.from_dataframe(df)
+gd = GridOptionsBuilder.from_dataframe(filtered_df)
 gridoptions = gd.build()
 grid_table = AgGrid(filtered_df,
                     height=200,
