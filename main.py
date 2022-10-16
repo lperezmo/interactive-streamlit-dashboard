@@ -344,11 +344,16 @@ text_options = st.selectbox("Text description on bars:", [None, 'DATE', 'DURATIO
 def get_gantt_chart(color_options, text_options):
     fig = px.timeline(filtered_df, x_start='START',x_end='END',y='NAMES', color=color_options,text=text_options)
     fig.update_yaxes(autorange='reversed')
+    fig.update_layout(title="Timeline of employee's clock in and clock out times",
+                        xaxis_title="Date/Clock in & clock out times",
+                        yaxis_title="Employee Names",
+                        autosize=True,
+                        height=int(filtered_df.shape[0]*80))
     return fig
 
 # Get data for graph, get figure, and show figure
 fig = get_gantt_chart(color_options, text_options)
-st.plotly_chart(fig, use_container_width=False)  #Display the plotly chart in Streamlit
+st.plotly_chart(fig, use_container_width=True)  #Display the plotly chart in Streamlit
 
 ###########################################################################
 # TOTAL HOURS & EVEN GROSS PAY
