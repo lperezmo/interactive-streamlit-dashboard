@@ -306,6 +306,9 @@ df = get_data_from_sql()
 filtered_df, str_name = filter_dataframe(df)
 ##########################################################################
 # SHOW TABLE AND OPTIONS
+# Use the full page instead of a narrow central column
+st.set_page_config(layout="wide")
+
 st.subheader("See your hours below:")
 cols_to_be_shown = ['START', 'END', 'DATE']
 st.dataframe(filtered_df.loc[:, cols_to_be_shown], use_container_width=True)
