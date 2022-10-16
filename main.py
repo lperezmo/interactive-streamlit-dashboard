@@ -15,6 +15,8 @@ from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode, DataReturnMode
 # from st_aggrid.shared import ColumnsAutoSizeMode
 # from st_aggrid.shared import GridUpdateMode, DataReturnMode, JsCode, walk_gridOptions, ColumnsAutoSizeMode, AgGridTheme
 import datetime
+# Use the full page instead of a narrow central column
+st.set_page_config(layout="wide")
 ##########################################################################
 # DEFINE IMPORTANT FUNCTIONS
 @st.experimental_memo
@@ -306,9 +308,6 @@ df = get_data_from_sql()
 filtered_df, str_name = filter_dataframe(df)
 ##########################################################################
 # SHOW TABLE AND OPTIONS
-# Use the full page instead of a narrow central column
-st.set_page_config(layout="wide")
-
 st.subheader("See your hours below:")
 cols_to_be_shown = ['START', 'END', 'DATE']
 st.dataframe(filtered_df.loc[:, cols_to_be_shown], use_container_width=True)
