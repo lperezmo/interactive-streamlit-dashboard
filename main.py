@@ -16,7 +16,7 @@ from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode, DataReturnMode
 # from st_aggrid.shared import GridUpdateMode, DataReturnMode, JsCode, walk_gridOptions, ColumnsAutoSizeMode, AgGridTheme
 import datetime
 # Use the full page instead of a narrow central column
-st.set_page_config(layout="wide")
+st.set_page_config(page_title='Example App by LPM', page_icon='https://raw.githubusercontent.com/pyinstaller/pyinstaller/develop/PyInstaller/bootloader/images/icon-windowed.ico', layout="wide")
 ##########################################################################
 # DEFINE IMPORTANT FUNCTIONS
 @st.experimental_memo
@@ -235,10 +235,10 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
                     user_date_input = right.date_input(
                         f"Values for {column}",
                         value=(
-                            # df[column].min(),
-                            # df[column].max(),
-                            _start,
-                            _end
+                            df[column].min(),
+                            df[column].max(),
+#                             _start,
+#                             _end
                         ),
                     )
                     if len(user_date_input) == 2:
