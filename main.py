@@ -274,10 +274,10 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
                 user_date_input = right.date_input(
                     f"Values for {column}",
                     value=(
-                        # df[column].min(),
-                        # df[column].max(),
-                        _start,
-                        _end
+                        df[column].min(),
+                        df[column].max(),
+#                         _start,
+#                         _end
                     ),
                 )
                 if len(user_date_input) == 2:
