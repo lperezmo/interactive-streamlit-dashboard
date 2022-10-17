@@ -29,20 +29,48 @@ def get_data_from_sql(days_past_due=0):
                     'ALICE',
                     'BOB',
                     'ALICE',
-                    'ALICE']
+                    'ALICE','LUIS','TEST','TEST2','TEST3']
     df['START'] = ['2022-09-17 06:49:50',
                    '2022-09-19 06:49:50', 
                    '2022-09-20 06:53:17',
                   '2022-09-21 06:33:17',
                   '2022-09-22 06:44:17',
-                  '2022-09-23 06:40:17']
+                  '2022-09-23 06:40:17',
+                  '2022-09-17 06:44:17',
+                  '2022-09-18 07:02:17',
+                  '2022-09-19 07:10:17',
+                  '2022-09-22 07:05:17']
     df['START'] = pd.to_datetime(df['START'])
     df['END'] = ['2022-09-17 17:05:14', 
                 '2022-09-19 17:05:14', 
                  '2022-09-20 16:53:17',
                  '2022-09-21 16:59:11',
                  '2022-09-22 17:33:10',
-                 '2022-09-23 16:32:38']
+                 '2022-09-23 17:23:38',
+                '2022-09-17 17:45:10',
+                 '2022-09-18 17:52:38',
+                 '2022-09-19 18:33:10',
+                 '2022-09-22 16:32:38']
+    df['DESC1'] = ['job 5', 
+                'job 9', 
+                 'job 3',
+                 'job 4',
+                 'job 5',
+                 'job 6',
+                'job 7',
+                 'job 8',
+                 'job 9',
+                 'job 10']
+    df['TYPE'] = ['Direct', 
+                'Indirect', 
+                 'Direct',
+                 'Internal',
+                 'Direct',
+                 'Direct',
+                'Direct',
+                 'Indirect',
+                 'Internal',
+                 'Internal']
     df['END'] = pd.to_datetime(df['END'])
     df['DATE'] = [df['START'][i].date() for i in df.index]
     # filtered_df = df.copy()
@@ -306,11 +334,77 @@ st.caption('Written & designed by Luis Perez Morales')
 # GET DATA
 df = get_data_from_sql()
 filtered_df, str_name = filter_dataframe(df)
+filtered_df.sort_values(by=['NAMES', 'START'], inplace=True, ignore_index=True)
+# df.sort_values(by=['START'])
 ##########################################################################
 # SHOW TABLE AND OPTIONS
+# CONDITIONAL FORMATTING PART
+def highlight_rows(row):
+    """
+    Highlight rows with following conditions:
+    BLUE: if person clocked before 6:45 am
+    ORANGE: if person clocked after 7:10 am
+    
+    """
+    value = row['START']
+    value_end = row['END']
+    limit_start_early = datetime.datetime.strptime("06:45:00", "%H:%M:%S")
+    limit_start_late = datetime.datetime.strptime("07:10:00", "%H:%M:%S")
+    # limit_three = datetime.strptime("01:10:00", "%H:%M:%S")
+    actual = datetime.datetime.strptime(value.__str__()[11:20], "%H:%M:%S")
+    # actual_end = datetime.strptime(value_end.__str__()[11:20], "%H:%M:%S")
+    #FFE0B3 light orange
+    #BFFFD4 green
+    #FFC1A5 darker orange
+    #8CCEFF blue
+    #FF9C99 pinkish
+    if actual<limit_start_early:
+        color = '#BFFFD4' # blue
+        fweight = 'cursive'
+    elif actual > limit_start_late:
+        color = '#FFC1A5' # darker orange
+        fweight='cursive'
+    else:
+        color='white'
+        fweight='normal'
+    return ['background-color: {};font-type: {}'.format(color, fweight) for r in row]
+
+def format_test(val):
+    """
+    Example highlighting by value
+    """
+    comparison = datetime.datetime.strptime('2022-09-22', "%Y-%m-%d").date()
+    comparison2 = datetime.datetime.strptime('2022-09-17', "%Y-%m-%d").date()
+    condition = (val ==  comparison) or (val == comparison2)
+    back_color = 'yellow' if condition else 'white'
+    return 'background-color: {}'.format(back_color)
+
+def pink_test(val):
+    """
+    Example highlighting by value
+    """
+    limit_start_early = datetime.datetime.strptime("06:45:00", "%H:%M:%S")
+    limit_start_late = datetime.datetime.strptime("07:10:00", "%H:%M:%S")
+    condition = (val ==  comparison) or (val == comparison2)
+    back_color = 'yellow' if condition else 'white'
+    return 'background-color: {}'.format(back_color)
+
+# Apply style
+# filtered_df.style.apply(highlight_rows, axis=1)
+
+# Subheader
 st.subheader("See your hours below:")
-cols_to_be_shown = ['START', 'END', 'DATE']
-st.dataframe(filtered_df.loc[:, cols_to_be_shown], use_container_width=True)
+
+# Limit columns to be shown
+cols_to_be_shown = ['NAMES','START', 'END', 'DATE']
+
+# Highlighting rows that surpass limits
+st.dataframe(filtered_df.loc[:, cols_to_be_shown].style.applymap(format_test).apply(highlight_rows, axis=1),
+                                                         use_container_width=True)
+# st.dataframe(filtered_df.loc[:, cols_to_be_shown].style.applymap(format_test).apply(highlight_rows, axis=1)\
+#                                                          .applymap(format_test, subset=[None]), 
+#                                                          use_container_width=True)
+
 # gd = GridOptionsBuilder.from_dataframe(filtered_df.loc[:, cols_to_be_shown])
 # gridoptions = gd.build()
 # grid_table = AgGrid(filtered_df.loc[:, cols_to_be_shown],
@@ -337,18 +431,52 @@ st.subheader("Timeline of your work, choose the different options to color and a
 # discrete_map_resource = dict colors by column
 
 # get figure
-color_options = st.selectbox("Color Gantt Chart by:", ['DATE'],index=0)
+color_options = st.selectbox("Color Gantt Chart by:", ['TYPE','DATE', 'DESC1'],index=0)
 text_options = st.selectbox("Text description on bars:", [None, 'DATE', 'DURATION', 'NAMES'],index=0)
 
 # @st.experimental_memo
 def get_gantt_chart(color_options, text_options):
-    fig = px.timeline(filtered_df, x_start='START',x_end='END',y='NAMES', color=color_options,text=text_options)
+    fig = px.timeline(filtered_df, 
+                      x_start='START',
+                      x_end='END',
+                      y='NAMES', 
+                      color=color_options,
+                      text=text_options, 
+                      hover_name="NAMES", 
+                      hover_data=["DURATION", "DESC1"],
+                      color_discrete_map={'Direct': 'Red',
+                                          'Indirect': 'Blue',
+                                          'Internal': 'Green',
+                                          'job 3': 'pink'})
     fig.update_yaxes(autorange='reversed')
-    fig.update_layout(title="Timeline of employee's clock in and clock out times",
-                        xaxis_title="Date/Clock in & clock out times",
-                        yaxis_title="Employee Names",
-                        autosize=True,
-                        height=int(filtered_df.shape[0]*80))
+    fig.update_layout(
+        # title="Employee Names",
+        xaxis_title="Date/Clock in & clock out times",
+        yaxis_title="Employee Names",
+        autosize=True,
+        height=int(filtered_df.shape[0]*80),
+        # hovermode='x unified'
+    )
+    fig.update_yaxes(automargin=True, showgrid=False)
+    fig.update_xaxes(showgrid=False)
+    # fig.update_yaxes(showspikes=True)
+    
+    for i,v in enumerate(df['DATE']):
+        # fig.add_vline(x=str(v.__str__()+' 07:00:00'),  line_width=1, line_dash="dash", line_color="green")
+        fig.add_vline(x=datetime.datetime.strptime(str(v.__str__()+' 07:00:00'), "%Y-%m-%d %H:%M:%S").timestamp() * 1000, 
+                      line_width=1, 
+                      line_dash="dash",
+                      line_color="blue",
+                      annotation_text="7 AM",
+                     annotation_position="top left"
+                     )
+        fig.add_vline(x=datetime.datetime.strptime(str(v.__str__()+' 12:00:00'), "%Y-%m-%d %H:%M:%S").timestamp() * 1000, 
+                      line_width=1, 
+                      line_dash="dash",
+                      line_color="blue",
+                      annotation_text="12 PM",
+                      annotation_position="top right"
+                     )
     return fig
 
 # Get data for graph, get figure, and show figure
