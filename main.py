@@ -367,7 +367,8 @@ def highlight_rows(row):
     else:
         color='white'
         fweight='normal'
-    return ['background-color: {};font-type: {}'.format(color, fweight) for r in row]
+    text_color = 'black'
+    return ['background-color: {};font-type: {};color: {}'.format(color, fweight, text_color) for r in row]
 
 def format_test(val):
     """
@@ -387,7 +388,8 @@ def pink_test(val):
     limit_start_late = datetime.datetime.strptime("07:10:00", "%H:%M:%S")
     condition = (val ==  comparison) or (val == comparison2)
     back_color = 'yellow' if condition else 'white'
-    return 'background-color: {}'.format(back_color)
+    color = 'black'
+    return 'background-color: {};color: {}'.format(back_color, color)
 
 # Apply style
 # filtered_df.style.apply(highlight_rows, axis=1)
