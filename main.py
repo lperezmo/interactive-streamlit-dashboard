@@ -463,22 +463,22 @@ def get_gantt_chart(color_options, text_options):
     fig.update_xaxes(showgrid=False)
     # fig.update_yaxes(showspikes=True)
     
-    for i,v in enumerate(df['DATE']):
-        # fig.add_vline(x=str(v.__str__()+' 07:00:00'),  line_width=1, line_dash="dash", line_color="green")
-        fig.add_vline(x=datetime.datetime.strptime(str(v.__str__()+' 07:00:00'), "%Y-%m-%d %H:%M:%S").timestamp() * 1000, 
-                      line_width=1, 
-                      line_dash="dash",
-                      line_color="blue",
-                      annotation_text="7 AM",
-                     annotation_position="top left"
-                     )
-        fig.add_vline(x=datetime.datetime.strptime(str(v.__str__()+' 12:00:00'), "%Y-%m-%d %H:%M:%S").timestamp() * 1000, 
-                      line_width=1, 
-                      line_dash="dash",
-                      line_color="blue",
-                      annotation_text="12 PM",
-                      annotation_position="top right"
-                     )
+#     for i,v in enumerate(df['DATE']):
+#         # fig.add_vline(x=str(v.__str__()+' 07:00:00'),  line_width=1, line_dash="dash", line_color="green")
+#         fig.add_vline(x=datetime.datetime.strptime(str(v.__str__()+' 07:00:00'), "%Y-%m-%d %H:%M:%S").timestamp() * 1000, 
+#                       line_width=1, 
+#                       line_dash="dash",
+#                       line_color="blue",
+#                       annotation_text="7 AM",
+#                      annotation_position="top left"
+#                      )
+#         fig.add_vline(x=datetime.datetime.strptime(str(v.__str__()+' 12:00:00'), "%Y-%m-%d %H:%M:%S").timestamp() * 1000, 
+#                       line_width=1, 
+#                       line_dash="dash",
+#                       line_color="blue",
+#                       annotation_text="12 PM",
+#                       annotation_position="top right"
+#                      )
     return fig
 
 # Get data for graph, get figure, and show figure
