@@ -12,8 +12,8 @@ from pandas.api.types import (
 )
 import numpy as np
 from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode, DataReturnMode
-# from st_aggrid.shared import ColumnsAutoSizeMode
-# from st_aggrid.shared import GridUpdateMode, DataReturnMode, JsCode, walk_gridOptions, ColumnsAutoSizeMode, AgGridTheme
+from st_aggrid.shared import ColumnsAutoSizeMode
+from st_aggrid.shared import GridUpdateMode, DataReturnMode, JsCode, walk_gridOptions, ColumnsAutoSizeMode, AgGridTheme
 import datetime
 # Use the full page instead of a narrow central column
 st.set_page_config(page_title='Example App by LPM', page_icon='https://raw.githubusercontent.com/pyinstaller/pyinstaller/develop/PyInstaller/bootloader/images/icon-windowed.ico', layout="wide")
@@ -407,16 +407,16 @@ st.dataframe(filtered_df.loc[:, cols_to_be_shown].style.applymap(format_test).ap
 #                                                          .applymap(format_test, subset=[None]), 
 #                                                          use_container_width=True)
 
-# gd = GridOptionsBuilder.from_dataframe(filtered_df.loc[:, cols_to_be_shown])
-# gridoptions = gd.build()
-# grid_table = AgGrid(filtered_df.loc[:, cols_to_be_shown],
-#                     height=200,
-#                     ColumnsAutoSizeMode = ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW,
-#                     gridOptions=gridoptions,
-#                     update_mode=GridUpdateMode.SELECTION_CHANGED,
-#                     use_container_width = True,
-#                     # theme="material"
-#                     )
+gd = GridOptionsBuilder.from_dataframe(filtered_df.loc[:, cols_to_be_shown])
+gridoptions = gd.build()
+grid_table = AgGrid(filtered_df.loc[:, cols_to_be_shown],
+                    height=200,
+                    ColumnsAutoSizeMode = ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW,
+                    gridOptions=gridoptions,
+                    update_mode=GridUpdateMode.SELECTION_CHANGED,
+                    theme='streamlit',
+                    # use_container_width =                   # theme="material"
+                    )
 
 # Save as CSV for own records
 csv = convert_df(filtered_df.loc[:, cols_to_be_shown])
