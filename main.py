@@ -51,16 +51,16 @@ def get_data_from_sql(days_past_due=0):
                  '2022-09-18 17:52:38',
                  '2022-09-19 18:33:10',
                  '2022-09-22 16:32:38']
-    df['DESC1'] = ['job 5', 
-                'job 9', 
-                 'job 3',
-                 'job 4',
-                 'job 5',
-                 'job 6',
-                'job 7',
-                 'job 8',
-                 'job 9',
-                 'job 10']
+    df['DESC1'] = ['special order', 
+                'concrete pads', 
+                 'reinforced concrete pads',
+                 'fiberglass manufacture',
+                 'fiberglass painting',
+                 'fiberglass selling',
+                'powder coat',
+                 'painting',
+                 'construction and materials',
+                 'insulation (concrete subcontract)']
     df['TYPE'] = ['Direct', 
                 'Indirect', 
                  'Direct',
@@ -398,7 +398,7 @@ def pink_test(val):
 st.subheader("See your hours below:")
 
 # Limit columns to be shown
-cols_to_be_shown = ['NAMES','START', 'END', 'DATE']
+cols_to_be_shown = ['NAMES','START', 'END', 'DATE', 'DESC1', 'TYPE']
 
 # Highlighting rows that surpass limits
 st.dataframe(filtered_df.loc[:, cols_to_be_shown].style.applymap(format_test).apply(highlight_rows, axis=1),
