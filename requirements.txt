@@ -4,3 +4,4 @@ streamlit
 streamlit-aggrid
 datetime
 plotly
+streamlit_qrcode_scanner
