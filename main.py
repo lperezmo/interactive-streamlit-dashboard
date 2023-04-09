@@ -331,6 +331,13 @@ st.sidebar.image('https://www.python.org/static/community_logos/python-logo-gene
 st.title("Sample hour checking program for employees")
 st.caption('Written & designed by Luis Perez Morales')
 ###########################################################################
+from streamlit_qrcode_scanner import qrcode_scanner  
+
+qr_code = qrcode_scanner(key='qrcode_scanner')  
+
+if qr_code:  
+  st.write(qr_code) 
+
 # GET DATA
 df = get_data_from_sql()
 filtered_df, str_name = filter_dataframe(df)
